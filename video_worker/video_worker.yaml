@@ -1,16 +1,16 @@
 kind: Job
 metadata:
-  name: videoqueue
+  name: video-worker
 spec:
-  completions: 15
-  parallelism: 3
+  completions: 128
+  parallelism: 6
   template:
     metadata:
-      name: videoqueue
+      name: video-worker
     spec:
       containers:
       - name: c
-        image: muharo/videoqueue
+        image: muharo/video_worker
         volumeMounts:
         - mountPath: /video
           name: video
