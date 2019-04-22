@@ -8,6 +8,4 @@ RUN apt-get update && \
 RUN mkdir /utils
 COPY utils/* /utils/
 
-RUN /usr/bin/amqp-declare-queue --url=$BROKER_URL -q $QUEUE_NAME -d
-
-CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
+CMD /usr/bin/amqp-declare-queue --url=$BROKER_URL -q $QUEUE_NAME -d && exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
