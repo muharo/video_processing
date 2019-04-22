@@ -6,4 +6,4 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /utils
-COPY ../utils /utils
+COPY utils/* /utils
