@@ -1,9 +1,14 @@
 FROM ubuntu:18.04
 
-RUN apt-get update && \
-    apt-get install -y software-properties-common ffmpeg curl ca-certificates amqp-tools python dnsutils \
+RUN apt-get clean && apt-get update && \
+    apt-get install -y software-properties-common ffmpeg curl ca-certificates amqp-tools python dnsutils locales \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
+
+RUN locale-gen en_US.UTF-8
+RUN echo "export LC_ALL=en_US.UTF-8" >> .bashrc
+RUN echo "export LANG=en_US.UTF-8" >> .bashrc
+RUN echo "export LANGUAGE=en_US.UTF-8" >> .bashrc
 
 RUN mkdir /utils
 COPY utils/* /utils/
