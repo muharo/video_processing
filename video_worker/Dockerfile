@@ -8,4 +8,4 @@ RUN apt-get update && \
 COPY ./worker.sh /worker.sh
 RUN chmod a+x /worker.sh
 
-CMD  /usr/bin/amqp-consume --url=$BROKER_URL -q $QUEUE -c 1 /worker.sh
+CMD  /usr/bin/amqp-consume --url=$BROKER_URL -q $QUEUE_NAME -c 1 /worker.sh
