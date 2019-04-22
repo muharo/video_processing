@@ -1,9 +1,10 @@
+apiVersion: batch/v1
 kind: Job
 metadata:
   name: video-worker
 spec:
-  completions: 128
-  parallelism: 6
+  completions: 3072
+  parallelism: 9
   template:
     metadata:
       name: video-worker
@@ -18,7 +19,7 @@ spec:
         - name: BROKER_URL
           value: amqp://guest:guest@rabbitmq-service:5672
         - name: QUEUE
-          value: foo
+          value: myqueue
       volumes:
       - name: video
         hostPath:

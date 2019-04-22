@@ -6,4 +6,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /utils
-COPY utils/* /utils
+COPY utils/* /utils/
+
+CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
