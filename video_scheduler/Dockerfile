@@ -6,11 +6,12 @@ RUN apt-get clean && apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN locale-gen en_US.UTF-8
-RUN echo "export LC_ALL=en_US.UTF-8" >> .bashrc
-RUN echo "export LANG=en_US.UTF-8" >> .bashrc
-RUN echo "export LANGUAGE=en_US.UTF-8" >> .bashrc
+RUN echo "export LC_ALL=en_US.UTF-8" >> ~/.bashrc
+RUN echo "export LANG=en_US.UTF-8" >> ~/.bashrc
+RUN echo "export LANGUAGE=en_US.UTF-8" >> ~/.bashrc
 
 RUN mkdir /utils
 COPY utils/* /utils/
+RUN chmod a+x /utils/*
 
 CMD /usr/bin/amqp-declare-queue --url=$BROKER_URL -q $QUEUE_NAME -d && exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
