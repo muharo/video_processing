@@ -16,6 +16,9 @@ spec:
       value: amqp://guest:guest@rabbitmq-service:5672
     - name: QUEUE_NAME
       value: myqueue
+    resources:
+      limits:
+        cpu: 100m
   volumes:
   - name: video
     hostPath:
