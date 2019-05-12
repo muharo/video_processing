@@ -1,16 +1,17 @@
 #!/bin/bash
 
-if [ $# -lt 1 ]; then
-    echo "Provide number of expected completions."
-    exit
-fi
-
 while :
 do
     date=$(date)
+    target=$(kubectl describe job video-worker | grep Completions | awk '{ print $2 }')
     count=$(kubectl get pods | grep Completed | wc -l)
-    if [ $count -eq $1 ]; then
-        ./send_message.sh $TG_TOKEN $TG_CHAT_ID "Test completed." &>/dev/null
+
+    if [ $count -eq $target ]; then
+        line0="Test complete!"
+        line1=$(kubectl describe job video-worker | grep Start | awk '$1=$1')
+        line2=$(kubectl describe job video-worker | grep Completed | awk '$1=$1')
+        message=$(printf "$line0\n$line1\n$line2")
+        ./send_message.sh $TG_TOKEN $TG_CHAT_ID "$message" &>/dev/null
         exit
     fi
     sleep 1
