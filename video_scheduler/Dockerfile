@@ -13,5 +13,6 @@ RUN echo "export LANGUAGE=en_US.UTF-8" >> ~/.bashrc
 RUN mkdir /utils
 COPY utils/* /utils/
 RUN chmod a+x /utils/*
+WORKDIR /utils
 
 CMD /usr/bin/amqp-declare-queue --url=$BROKER_URL -q $QUEUE_NAME -d && exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
