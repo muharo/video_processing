@@ -2,16 +2,27 @@
 
 read line
 
-echo "Dequeue: $line" >> /video/processing.log
+path="/video"
+input="${path}/input/${line}"
+output="${path}/output/${line}"
+processing_log="${path}/processing.log"
+execution_log="${path}/execution.log"
+
+echo "Dequeue: $line" >> $processing_log
 
 start=`date +%s`
 
-time=$(ffmpeg -i "/video/input/$line" 2>&1 | grep Duration | cut -d ' ' -f 4 | sed s/,// | awk -F: '{ print ($1 * 3600) + ($2 * 60) + $3 }')
-size=$(du -b "/video/input/$line" | awk '{ print $1 }')
+encoding=$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1 $input)
+bitrate=$(ffprobe -v error -select_streams v:0 -show_entries stream=bit_rate -of default=noprint_wrappers=1:nokey=1 $input)
+duration=$(ffprobe -v error -select_streams v:0 -show_entries stream=duration -of default=noprint_wrappers=1:nokey=1 $input | sed 's/[.].*//')
+frames=$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of default=noprint_wrappers=1:nokey=1 $input)
+resolution=$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=s=x:p=0 $input)
+size=$(du -b $input | awk '{ print $1 }')
 
-ffmpeg -i "/video/input/$line" -vf scale=320:240 "/video/output/$line"
+ffmpeg -i $input -vf scale=320:240 $output
 
 end=`date +%s`
 runtime=$((end-start))
 
-echo "$size | $time | $runtime | $line" >> /video/execution.log
+# Size | Duration | Frames | Bitrate | Resolution | Runtime | Encoding | Name
+echo "$size | $duration | $frames | $bitrate | $resolution | $runtime | $encoding | $line" >> $execution_log

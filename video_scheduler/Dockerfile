@@ -1,7 +1,7 @@
 FROM ubuntu:18.04
 
 RUN apt-get clean && apt-get update && \
-    apt-get install -y software-properties-common ffmpeg curl ca-certificates amqp-tools python dnsutils locales \
+    apt-get install -y software-properties-common ffmpeg curl ca-certificates amqp-tools python dnsutils locales vim \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
