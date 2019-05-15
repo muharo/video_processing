@@ -23,7 +23,7 @@ do
                         "/status")
                                 kubectl get job video-worker &>/dev/null
                                 if [ $? -ne 0 ]; then
-                                        ./send_message.sh $TG_TOKEN $TG_CHAT_ID "There is no job running." &>/dev/null
+                                        ./tg_send_message.sh $TG_TOKEN $TG_CHAT_ID "There is no job running." &>/dev/null
                                 else
                                         age=$(kubectl get job video-worker | tail --lines=1 | awk '{ print $4 }')
                                         line0="Age: ${age}"
@@ -33,14 +33,14 @@ do
                                         line3=$(kubectl describe job video-worker | grep Completions| awk '$1=$1')
                                         line4=$(kubectl describe job video-worker | grep Statuses| awk '$1=$1')
                                         to_send=$(printf "$line0\n$line1\n$line2\n$line3\n$line4")
-                                        ./send_message.sh $TG_TOKEN $TG_CHAT_ID "$to_send" &>/dev/null
+                                        ./tg_send_message.sh $TG_TOKEN $TG_CHAT_ID "$to_send" &>/dev/null
                                 fi
                                 ;;
                         "/start")
-                                ./send_message.sh $TG_TOKEN $TG_CHAT_ID "Hello master! How may I help?" &>/dev/null
+                                ./tg_send_message.sh $TG_TOKEN $TG_CHAT_ID "Hello master! How may I help?" &>/dev/null
                                 ;;
                         *)
-                                ./send_message.sh $TG_TOKEN $TG_CHAT_ID "Unknown command. Sorry." &>/dev/null
+                                ./tg_send_message.sh $TG_TOKEN $TG_CHAT_ID "Unknown command. Sorry." &>/dev/null
                                 ;;
                 esac
         fi

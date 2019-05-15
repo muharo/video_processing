@@ -30,8 +30,7 @@ publish_tasks(){
     i=$counter
     for file in $list; do
         if [[ $i -gt 0 ]]; then
-            echo "/usr/bin/amqp-publish --url=$BROKER_URL -r $QUEUE_NAME -p -b $file"
-            #/usr/bin/amqp-publish --url=$BROKER_URL -r $QUEUE_NAME -p -b $file
+            /usr/bin/amqp-publish --url=$BROKER_URL -r $QUEUE_NAME -p -b $file
             ((i--))
         else
             break

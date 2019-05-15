@@ -11,7 +11,7 @@ do
         line1=$(kubectl describe job video-worker | grep Start | awk '$1=$1')
         line2=$(kubectl describe job video-worker | grep Completed | awk '$1=$1')
         message=$(printf "$line0\n$line1\n$line2")
-        ./send_message.sh $TG_TOKEN $TG_CHAT_ID "$message" &>/dev/null
+        ./tg_send_message.sh $TG_TOKEN $TG_CHAT_ID "$message" &>/dev/null
         exit
     fi
     sleep 1
