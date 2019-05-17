@@ -1,13 +1,13 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: video-worker
+  name: video-worker-${parallelism}
 spec:
-  completions: 128
-  parallelism: 8
+  completions: ${counter}
+  parallelism: ${parallelism}
   template:
     metadata:
-      name: video-worker
+      name: video-worker-${parallelism}
     spec:
       containers:
       - name: c
