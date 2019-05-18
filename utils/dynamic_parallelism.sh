@@ -4,9 +4,9 @@ read -p "Number of tasks: " tasks
 read -p "Percentage of high consuming tasks: " percentage
 
 counter=$((tasks*percentage/100))
-parallelism=8
+parallelism=9
 # echo "$counter tasks to be run as ${parallelism} parallel tasks"
-cat template.txt | envsubst > video_worker_1.yml
+cat video_worker.template | envsubst > video_worker_1.yml
 
 kubectl create -f video_worker_1.yaml
 
@@ -21,8 +21,8 @@ do
 done
 
 counter=$((tasks-counter))
-parallelism=16
+parallelism=15
 # echo "$counter tasks to be run as ${parallelism} parallel tasks"
-cat template.txt | envsubst > video_worker_2.yml
+cat video_worker.template | envsubst > video_worker_2.yml
 
 kubectl create -f video_worker_2.yaml
