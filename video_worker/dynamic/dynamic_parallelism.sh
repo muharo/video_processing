@@ -23,7 +23,7 @@ do
 	fi
 done
 
-echo "Stage1 complete. Increasing parallelism from $stage1 to $stage2.
+echo "Stage1 complete. Increasing parallelism from $stage1 to $stage2."
 
 export parallelism=$stage2
 cat video_worker.template | envsubst > video_worker_2.yaml
