@@ -1,9 +1,9 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: video-worker-${parallelism}
+  name: video-worker
 spec:
-  completions: ${counter}
+  completions: ${tasks}
   parallelism: ${parallelism}
   template:
     metadata:
