@@ -2,9 +2,11 @@
 
 read -p "Number of tasks: " tasks
 read -p "Percentage of high consuming tasks: " percentage
+read -p "Stage1 parallelism: " stage1
+read -p "Stage2 parallelism: " stage2
 
 export tasks
-export parallelism=9
+export parallelism=$stage1
 cat video_worker.template | envsubst > video_worker_1.yaml
 
 start=`date +%s`
@@ -21,8 +23,9 @@ do
 	fi
 done
 
-export counter=$((tasks-counter))
-export parallelism=15
+echo "Stage1 complete. Increasing parallelism from $stage1 to $stage2.
+
+export parallelism=$stage2
 cat video_worker.template | envsubst > video_worker_2.yaml
 
 kubectl apply -f video_worker_2.yaml

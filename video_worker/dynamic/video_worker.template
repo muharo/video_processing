@@ -7,7 +7,7 @@ spec:
   parallelism: ${parallelism}
   template:
     metadata:
-      name: video-worker-${parallelism}
+      name: video-worker
     spec:
       containers:
       - name: c
