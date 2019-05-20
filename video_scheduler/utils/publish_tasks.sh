@@ -20,11 +20,9 @@ elif ! [[ $counter =~ $re ]] ; then
     echo "Not a valid number! A number is required!"
     echo ""
     exit 1
+elif [[ $counter -eq 0 ]]; then
+    counter=$(ls $path | wc -l)
 fi
-
-title="Select tasks arrangement algorithm."
-prompt="Pick an option:"
-options=("Alpha" "SFF" "LFF" "SFLF")
 
 publish_tasks(){
     i=$counter
@@ -38,44 +36,83 @@ publish_tasks(){
     done
 }
 
+if [[ -z $2 ]]; then
 
-echo ""
-echo "$title"
-echo ""
+    title="Select tasks arrangement algorithm."
+    prompt="Pick an option:"
+    options=("FIFO" "SFF" "LFF" "SFLF")
 
-PS3="$prompt "
-select opt in "${options[@]}" "Cancel"; do
+    echo ""
+    echo "$title"
+    echo ""
 
-    case "$REPLY" in
+    PS3="$prompt "
+    select opt in "${options[@]}" "Cancel"; do
 
-    1)
+        case "$REPLY" in
+
+        1)
+            algorithm="FIFO"
+            break
+            ;;
+        2)
+            algorithm="FIFO"
+            break
+            ;;
+        3)
+            algorithm="FIFO"
+            break
+            ;;
+        4)
+            algorithm="FIFO"
+            break
+            ;;
+
+        5)
+            echo ""
+            echo "Goodbye!"
+            echo ""
+            exit 0
+            ;;
+        *)
+            echo ""
+            echo "Invalid option. Try again!"
+            continue
+            ;;
+        esac
+    done
+
+else
+    algorithm=$2
+fi
+
+case "$algorithm" in
+
+    FIFO)
         echo ""
         echo "Ordering videos alphabetically..."
         list=$(ls -1v $path)
         publish_tasks
         echo "$counter tasks were added to queue."
         echo ""
-        break
         ;;
-    2)
+    SFF)
         echo ""
         echo "Ordering videos by size (ascending)..."
         list=$(ls -1rS $path)
         publish_tasks
         echo "$counter tasks were added to queue."
         echo ""
-        break
         ;;
-    3)
+    LFF)
         echo ""
         echo "Ordering videos by size (descending)..."
         list=$(ls -1S $path)
         publish_tasks
         echo "$counter tasks were added to queue."
         echo ""
-        break
         ;;
-    4)
+    SFLF)
         echo ""
         echo "Ordering videos by size (small file, large file)..."
         j=0
@@ -85,21 +122,10 @@ select opt in "${options[@]}" "Cancel"; do
         publish_tasks
         echo "$counter tasks were added to queue."
         echo ""
-        break
-        ;;
-
-    5)
-        echo ""
-        echo "Goodbye!"
-        echo ""
-        exit 0
         ;;
     *)
         echo ""
-        echo "Invalid option. Try again!"
-        continue
+        echo "Invalid algorithm. Exit!"
+        exit 1
         ;;
-    esac
-done
-
-
+esac
