@@ -7,13 +7,17 @@ read -p "Number of cores per node: " cores
 echo ""
 export tasks
 
-start=`date +%s`
-
 # number of nodes and cores gives us the parallelism interval
 parallelism_up=$((nodes*(cores+2)))
 parallelism_down=$((nodes*(cores+1)))
-stages=$((parallelism_up-parallelism_down))
+stages=$((parallelism_up-parallelism_down+1))
 stage_size=$((tasks/stages))
+
+echo "There will be $stages stages of $stage_size videos each."
+echo "The parallelism will be lowered for each stage from $parallelism_up to $parallelism_down."
+echo ""
+
+start=`date +%s`
 
 for ((i = 1 ; i <= $stages ; i++)); do
     export parallelism=$parallelism_up
