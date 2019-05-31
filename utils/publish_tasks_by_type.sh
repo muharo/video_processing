@@ -11,7 +11,7 @@ usage(){
 }
 
 re='^[0-9]+$'
-array=("FIFO" "SFF" "LFF" "SFLF")
+array=("FIFO" "SFF" "LFF")
 
 # Read tasks number and algorithm
 if [[ -z $1 ]]; then   
