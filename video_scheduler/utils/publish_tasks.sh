@@ -56,15 +56,15 @@ if [[ -z $2 ]]; then
             break
             ;;
         2)
-            algorithm="FIFO"
+            algorithm="SFF"
             break
             ;;
         3)
-            algorithm="FIFO"
+            algorithm="LFF"
             break
             ;;
         4)
-            algorithm="FIFO"
+            algorithm="SFLF"
             break
             ;;
 

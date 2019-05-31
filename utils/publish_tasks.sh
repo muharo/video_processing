@@ -1,13 +1,13 @@
 #!/bin/bash
 
 usage(){
-	echo ""
+    echo ""
     echo $1
     echo ""
     echo "Usage: $0 TASKS_NUMBER ALGORITHM"
     echo "TASKS_NUMBER - provide integer or use '0' to read the number of videos from input path"
     echo "ALGORITHM - accepted values for now are FIFO, SFF, LFF or SFLF"
-	echo ""
+    echo ""
 }
 
 re='^[0-9]+$'
