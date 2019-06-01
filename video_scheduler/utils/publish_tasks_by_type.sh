@@ -86,9 +86,9 @@ case "$algorithm" in
     FIFO)
         echo ""
         echo "Ordering videos alphabetically..."
-        list=$(ls -1v *.webm $path)
+        list=$(ls -1v $path | grep webm)
         publish_tasks
-        list=$(ls -1v *.mp4 $path)
+        list=$(ls -1v $path | grep mp4)
         publish_tasks
         echo "$counter tasks were added to queue."
         echo ""
@@ -96,9 +96,9 @@ case "$algorithm" in
     SFF)
         echo ""
         echo "Ordering videos by size (ascending)..."
-        list=$(ls -1rS *.webm $path)
+        list=$(ls -1rS $path | grep webm)
         publish_tasks
-        list=$(ls -1rS *.mp4 $path)
+        list=$(ls -1rS $path | grep mp4)
         publish_tasks
         echo "$counter tasks were added to queue."
         echo ""
@@ -106,9 +106,9 @@ case "$algorithm" in
     LFF)
         echo ""
         echo "Ordering videos by size (descending)..."
-        list=$(ls -1S *.webm $path)
+        list=$(ls -1S $path | grep webm)
         publish_tasks
-        list=$(ls -1S *.mp4 $path)
+        list=$(ls -1S $path | grep mp4)
         publish_tasks
         echo "$counter tasks were added to queue."
         echo ""
