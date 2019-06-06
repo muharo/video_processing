@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: video-worker
+spec:
+  completions: 256
+  parallelism: 24
+  template:
+    metadata:
+      name: video-worker
+    spec:
+      containers:
+      - name: c
+        image: muharo/video_worker
+        volumeMounts:
+        - mountPath: /video
+          name: video
+        env:
+        - name: BROKER_URL
+          value: amqp://guest:guest@rabbitmq-service:5672
+        - name: QUEUE_NAME
+          value: myqueue
+      volumes:
+      - name: video
+        hostPath:
+          path: /shared/video
+      restartPolicy: OnFailure
