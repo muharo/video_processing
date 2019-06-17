@@ -3,7 +3,7 @@
 path="/video/input"
 re='^[0-9]+$'
 
-# Read tasks number
+# Read tasks number, if not provided as parameter
 if [[ -z $1 ]]; then
     echo ""
     echo "How many tasks to be queued?"
@@ -12,6 +12,7 @@ else
     counter=$1
 fi
 
+# Throw an error if number of tasks is not provided or an invalid number
 if [[ -z $counter ]]; then
     echo "No argument provided! A number is required!"
     echo ""
@@ -20,6 +21,8 @@ elif ! [[ $counter =~ $re ]] ; then
     echo "Not a valid number! A number is required!"
     echo ""
     exit 1
+# To let the script count the videos in the input directory,
+# just pass 0 for the number of tasks
 elif [[ $counter -eq 0 ]]; then
     counter=$(ls $path | wc -l)
 fi
